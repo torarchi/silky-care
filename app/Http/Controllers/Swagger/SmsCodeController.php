@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 /**
 * @OA\Post(
 *      path="/api/v1/send-sms-code",
-*      operationId="sendSmsCode",
+*      operationId="send",
 *      tags={"Verification"},
 *      summary="Send SMS Code",
 *      description="Send SMS code for user registration.",

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 /**
  * @OA\Post(
  *      path="/api/v1/verify-sms-code",
- *      operationId="verifySmsCode",
+ *      operationId="verify",
  *      tags={"Verification"},
  *      summary="Verify SMS Code",
  *      description="Verify the SMS code for a user.",

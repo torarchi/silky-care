@@ -13,7 +13,7 @@
                 ],
                 "summary": "Send SMS Code",
                 "description": "Send SMS code for user registration.",
-                "operationId": "sendSmsCode",
+                "operationId": "send",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -82,7 +82,7 @@
                 ],
                 "summary": "Verify SMS Code",
                 "description": "Verify the SMS code for a user.",
-                "operationId": "verifySmsCode",
+                "operationId": "verify",
                 "requestBody": {
                     "required": true,
                     "content": {

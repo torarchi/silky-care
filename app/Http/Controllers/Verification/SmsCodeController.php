@@ -5,39 +5,23 @@ namespace App\Http\Controllers\Verification;
 use App\Http\Controllers\Controller;
 use App\Models\VerificationCode;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\SmsCodeRequest;
 
 class SmsCodeController extends Controller
 {
-    public function sendSmsCode(Request $request)
+    public function send(SmsCodeRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'phone' => 'required|digits:10|numeric', 
-            'terms' => 'required|boolean', 
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $phoneRegex = '/^[0-9]{10}$/';
-        if (!preg_match($phoneRegex, $request->phone)) {
-            return response()->json(['errors' => ['phone' => ['Неверный формат номера телефона.']]], 422);
-        }
-
-        if (!$request->terms) {
-            return response()->json(['errors' => ['terms' => ['Необходимо принять условия.']]], 422);
-        }
+        $data = $request->validated();
 
         $existingUser = User::where('phone', $request->phone)->first();
-        if ($existingUser) {
-            return response()->json(['errors' => ['phone' => ['Номер телефона уже зарегистрирован.']]], 422);
+
+        if ($existingUser && $existingUser->verification) {
+            return response()->json(['message' => 'Номер уже верифицирован. Воспользуйтесь восстановлением доступа.']);
         }
 
-        $user = User::updateOrCreate(
+        $user = User::firstOrCreate(
             ['phone' => $request->phone],
-            ['terms' => $request->terms]
+            ['terms' => true]
         );
 
         $code = random_int(100000, 999999);
@@ -47,6 +31,6 @@ class SmsCodeController extends Controller
             'code' => $code,
         ]);
 
-        return response()->json(['message' => 'Код SMS успешно отправлен']);
+        return response()->json(['success' => true]);
     }
 }

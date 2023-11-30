@@ -10,7 +10,12 @@ class VerificationCode extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'code', 'attempts', 'finished'];
+    protected $fillable = [
+        'user_id', 
+        'code', 
+        'attempts', 
+        'finished'
+    ];
 
     public function user()
     {

@@ -20,7 +20,7 @@ class SendSmsCodeTest extends TestCase
         ]);
 
         $response->assertSuccessful();
-        $response->assertJsonStructure(['message']);
+        $response->assertJsonStructure(['success']);
 
         $this->assertDatabaseHas('verification_codes', [
             'user_id' => User::first()->id,

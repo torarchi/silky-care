@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('phone', 10)->unique();
             $table->boolean('terms');
             $table->boolean('verification')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
