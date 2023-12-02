@@ -24,8 +24,6 @@ class SendSmsCodeTest extends TestCase
 
         $this->assertDatabaseHas('verification_codes', [
             'user_id' => User::first()->id,
-            'attempts' => 0,
-            'finished' => false,
         ]);
     }
     

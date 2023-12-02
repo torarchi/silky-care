@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('phone', 10)->unique();
             $table->boolean('terms');
             $table->boolean('verification')->default(false);
+            $table->boolean('finished')->default(false);
+            $table->unsignedInteger('attempts')->default(0); 
             $table->softDeletes();
             $table->timestamps();
         });

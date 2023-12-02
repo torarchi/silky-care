@@ -19,7 +19,6 @@ class VerifySmsCodeTest extends TestCase
 
         $verificationCode = VerificationCode::factory()->create([
             'user_id' => $user->id,
-            'finished' => false,
         ]);
 
         $response = $this->postJson('/api/v1/verify-sms-code', [
@@ -52,7 +51,6 @@ class VerifySmsCodeTest extends TestCase
 
         $verificationCode = VerificationCode::factory()->create([
             'user_id' => $user->id,
-            'finished' => false,
             'created_at' => now()->subMinutes(10), 
         ]);
 
@@ -67,12 +65,12 @@ class VerifySmsCodeTest extends TestCase
 
     public function test_max_attempts_exceeded()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'attempts' => 7
+        ]);
 
         $verificationCode = VerificationCode::factory()->create([
             'user_id' => $user->id,
-            'finished' => false,
-            'attempts' => 6, 
         ]);
 
         $response = $this->postJson('/api/v1/verify-sms-code', [

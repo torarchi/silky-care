@@ -13,8 +13,6 @@ class VerificationCode extends Model
     protected $fillable = [
         'user_id', 
         'code', 
-        'attempts', 
-        'finished'
     ];
 
     public function user()

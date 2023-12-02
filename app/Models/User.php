@@ -16,6 +16,8 @@ class User extends Authenticatable
         'phone',
         'terms',
         'verification',
+        'attempts', 
+        'finished'
     ];
 
     public function verificationCodes()

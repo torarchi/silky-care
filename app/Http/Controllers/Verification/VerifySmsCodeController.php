@@ -16,18 +16,13 @@ class VerifySmsCodeController extends Controller
 
         $user = User::where('phone', $request->phone)->first();
 
-        if ($user->verification) {
-            return response()->json(['error' => 'Пользователь уже верифицирован.'], 422);
-        }
-
         $verificationCode = VerificationCode::where([
             ['user_id', '=', $user->id],
             ['code', '=', $request->code],
-            ['finished', '=', false],
         ])->first();
 
         if (!$verificationCode || $verificationCode->code != $request->code) {
-            $user->verificationCodes()->increment('attempts');
+            $user->increment('attempts');
             return response()->json(['error' => 'Неверный код.'], 422);
         }
 
@@ -35,15 +30,15 @@ class VerifySmsCodeController extends Controller
             return response()->json(['error' => 'Срок действия кода истек'], 423);
         }
 
-        if ($verificationCode->attempts >= 6) {
+        if ($user->attempts >= 6) {
             return response()->json(['error' => 'Превышено количество попыток.'], 424);
         }
 
-        $verificationCode->update(['finished' => true]);
+        $user->update(['finished' => true]);
         $verificationCode->delete();
     
         $token = $user->createToken('verification-token')->accessToken;
     
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $user->createToken('verification-token')->accessToken]);
     }
 }

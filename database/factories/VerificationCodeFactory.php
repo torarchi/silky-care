@@ -23,7 +23,6 @@ class VerificationCodeFactory extends Factory
         return [
             'user_id' => $user->id,
             'code' => $this->faker->numerify('######'),
-            'finished' => false,
             'created_at' => now(),
         ];
     }

@@ -15,10 +15,6 @@ class SmsCodeController extends Controller
 
         $existingUser = User::where('phone', $request->phone)->first();
 
-        if ($existingUser && $existingUser->verification) {
-            return response()->json(['message' => 'Номер уже верифицирован. Воспользуйтесь восстановлением доступа.']);
-        }
-
         $user = User::firstOrCreate(
             ['phone' => $request->phone],
             ['terms' => true]

@@ -23,6 +23,8 @@ class UserFactory extends Factory
         return [
             'phone' => $this->faker->unique()->numerify('777#######'),
             'terms' => $this->faker->boolean,
+            'finished' => false,
+            'attempts' => 0,
         ];
     }
 
@@ -32,7 +34,7 @@ class UserFactory extends Factory
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
-            'verification' => null,
+            'verification' => false,
         ]);
     }
 }
