@@ -28,8 +28,6 @@ class VerifySmsCodeTest extends TestCase
 
         $response->assertSuccessful();
         $response->assertJsonStructure(['token']);
-
-        $user->refresh();
     }
 
     public function test_invalid_code()

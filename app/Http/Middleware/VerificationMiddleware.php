@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,14 +18,9 @@ class VerificationMiddleware
     {
         $user = $request->user();
 
-        if ($user->verification) {
+        if ($user && $user->verification) {
             return response()->json(['error' => 'Пользователь уже верифицирован.'], 422);
         }
-
-        if (!$verificationCode || $user->finished) {
-            return response()->json(['error' => 'Неверный код или код истек.'], 422);
-        }
-
         return $next($request);
     }
     

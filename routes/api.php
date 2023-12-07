@@ -19,5 +19,5 @@ use App\Http\Controllers\Verification\VerifySmsCodeController;
 
 Route::prefix('v1')->group(function () {
     Route::post('send-sms-code', [SmsCodeController::class, 'send']);
-    Route::post('verify-sms-code', [VerifySmsCodeController::class, 'verify']);
+    Route::post('verify-sms-code', [VerifySmsCodeController::class, 'verify'])->middleware('verification');
 });

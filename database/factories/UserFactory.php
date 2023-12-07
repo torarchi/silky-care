@@ -25,16 +25,8 @@ class UserFactory extends Factory
             'terms' => $this->faker->boolean,
             'finished' => false,
             'attempts' => 0,
+            'verification' => false,
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'verification' => false,
-        ]);
-    }
 }
