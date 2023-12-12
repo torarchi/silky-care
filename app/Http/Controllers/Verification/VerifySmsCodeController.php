@@ -34,7 +34,7 @@ class VerifySmsCodeController extends Controller
             return response()->json(['error' => 'Превышено количество попыток.'], 424);
         }
 
-        $user->update(['finished' => true]);
+        $user->update(['verification' => true]);
         $verificationCode->delete();
     
         $token = $user->createToken('verification-token')->accessToken;
